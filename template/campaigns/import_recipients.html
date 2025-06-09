@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="mb-4">Import Recipients</h1>
+    
+    <div class="card shadow">
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    {{ form.campaign_name.label_tag }}
+                    {{ form.campaign_name }}
+                    {% if form.campaign_name.errors %}
+                        <div class="text-danger">{{ form.campaign_name.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.template_choice.label_tag }}
+                    {{ form.template_choice }}
+                    {% if form.template_choice.errors %}
+                        <div class="text-danger">{{ form.template_choice.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    {{ form.file.label_tag }}
+                    {{ form.file }}
+                    {% if form.file.errors %}
+                        <div class="text-danger">{{ form.file.errors }}</div>
+                    {% endif %}
+                    <br>
+                    <small class="form-text text-muted">Accepted formats: CSV, XLS, XLSX</small>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Import Recipients</button>
+                <a href="{% url 'campaign_list' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <h5>File Requirements:</h5>
+        <ul>
+            <li>Must contain columns: <code>email</code>, <code>recipient_name</code></li>
+            <li>Optional column: <code>last_name</code></li>
+            <li>First row should be headers</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

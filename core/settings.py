@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'emailer'
 ]
 
 MIDDLEWARE = [
@@ -54,7 +58,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,9 +118,48 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Email settings
+EMAIL_BACKEND = 'emailer.backends.email_backend.EmailBackend'
+EMAIL_HOST = 'smtp.titan.email'  # Your Titan mail server
+EMAIL_PORT = 465  # Use 587 for TLS
+EMAIL_USE_SSL = True
+EMAIL_HOST_USER = 'info@bluediamondsolutions.org'  # Your Titan email
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')  # Get from environment variable
+DEFAULT_FROM_EMAIL = 'info@bluediamondsolutions.org'
+SERVER_EMAIL = 'info@bluediamondsolutions.org'
+EMAIL_TIMEOUT = 30  # seconds
+
+EMAIL_BATCH_SIZE = 50  # Number of emails to send per batch
+COMPANY_NAME = 'Blue Diamond 3D Solutions'
+CONTACT_EMAIL = 'info@bluediamondsolutions.org'
+WEBSITE_URL = 'https://bluediamondsolutions.org'
+ADMIN_EMAIL = 'info@bluediamondsolutions.org'
+
+print(os.getenv('EMAIL_HOST_PASSWORD'))
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.core.mail': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}

@@ -1,0 +1,25 @@
+Hi {{ recipient_name }},
+            
+Ready to take your Establishmnt to the next level?
+we can help you do that with the following and so much more:
+
+Mouthwatering digital menus and websites
+Instagram/TikTok campaigns that fill seats
+Custom loyalty program apps
+Online ordering and delivery integration
+POS system with inventory management
+Customer loyalty programs
+Table reservation system
+Staff scheduling and payroll
+
+Increase revenue and improve customer satisfaction with {{ company_name }}
+
+Book a Discovery Call
+
+Or reply to this email - I'd love to hear about your current challenges
+
+Best regards,
+The Blue Diamond Solutions Team
+
+info@bluediamondsolutions.org
+www.bluediamondsolutions.org

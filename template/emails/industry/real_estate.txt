@@ -1,0 +1,21 @@
+Hi {{ recipient_name }},
+
+In today's competitive real estate market, {% if last_name|length > 4 %} {{ last_name }}'s {% else %} {{ recipient_name }}'s {% endif %} needs standout digital presence to attract more buyers and sellers. We help real estate professionals like you:
+
+- Create stunning property showcase websites
+- Develop automated lead capture systems
+- Design high-converting landing pages for listings
+- Build virtual tour integrations
+- Automate client communication workflows
+
+Our clients typically see 30% more qualified leads within the first 3 months of implementing our solutions.
+
+Schedule Free Consultation: https://calendar.google.com/calendar/appointments/schedules/AcZssZ0-2xHcnHsvVw4zBqtZv8hb5Vy9LkjLUYWyw8M1qnfLMBxVuOAnoRV9VW_FYZb5cCH0MleSS51-?gv=true
+
+Or reply to this email - we'd love to discuss how we can help grow your real estate business
+
+Best regards,
+The Blue Diamond Solutions Team
+
+{{ contact_email }}
+{{ website_url }}

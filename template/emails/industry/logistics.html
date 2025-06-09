@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Blue Diamond Solutions - Digital Solutions for Finance Professionals
+    </title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        margin: 0;
+        padding: 0;
+        background-color: #f8fafc;
+      }
+      .container {
+        max-width: 600px;
+        margin: 20px auto;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+        background-color: #3b82f6;
+        padding: 25px 20px;
+        text-align: center;
+      }
+      .header h1 {
+        color: white;
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+      }
+      .content {
+        padding: 25px;
+      }
+      .greeting {
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: #1e3a8a;
+      }
+      .message {
+        margin-bottom: 20px;
+        font-size: 15px;
+        line-height: 1.6;
+      }
+      .benefits-list {
+        margin: 20px 0;
+        padding-left: 20px;
+      }
+      .benefits-list li {
+        margin-bottom: 10px;
+        position: relative;
+        list-style-type: none;
+      }
+      .benefits-list li:before {
+        content: "•";
+        color: #3b82f6;
+        font-weight: bold;
+        display: inline-block;
+        width: 1em;
+        margin-left: -1em;
+      }
+      .example {
+        background-color: #f0f9ff;
+        border-left: 3px solid #3b82f6;
+        padding: 12px 15px;
+        margin: 20px 0;
+        font-size: 14px;
+        border-radius: 0 4px 4px 0;
+      }
+      .response-options {
+        margin: 25px 0;
+        text-align: center;
+        font-size: 15px;
+      }
+      .button {
+        display: inline-block;
+        background-color: #f59e0b;
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 22px;
+        border-radius: 5px;
+        font-size: 15px;
+        transition: background-color 0.3s;
+        margin: 10px 5px;
+      }
+      .button:hover {
+        background-color: #d97706;
+      }
+      .reply-option {
+        margin: 15px 0;
+        font-size: 15px;
+        text-align: center;
+        color: #64748b;
+      }
+      .signature {
+        margin-top: 25px;
+        font-size: 15px;
+      }
+      .signature-name {
+        font-weight: bold;
+        color: #1e3a8a;
+      }
+      .footer {
+        text-align: center;
+        padding: 15px;
+        font-size: 13px;
+        color: #64748b;
+        border-top: 1px solid #e2e8f0;
+        background-color: #f9fafb;
+      }
+      .footer a {
+        color: #3b82f6;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="greeting">Hi {{ recipient_name }},</div>
+
+        <div class="message">
+          In today's fast-paced supply chain environment, your digital tools
+          need to keep up. We help logistics companies like
+          <strong>{% if last_name|length > 4 %} {{ last_name }} {% else %} {{ recipient_name }} {% endif %}</strong>
+          optimize their operations with:
+        </div>
+
+        <ul class="benefits-list">
+          <li>Custom load-tracking dashboards for real-time visibility</li>
+          <li>Modern fleet branding that builds professionalism</li>
+          <li>Targeted LinkedIn campaigns to attract B2B clients</li>
+        </ul>
+
+        <div class="example">
+          Our recent logistics client reduced customer inquiries by 25% after
+          implementing our tracking dashboard solution.
+        </div>
+
+        <div class="response-options">
+          <a
+            href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0-2xHcnHsvVw4zBqtZv8hb5Vy9LkjLUYWyw8M1qnfLMBxVuOAnoRV9VW_FYZb5cCH0MleSS51-?gv=true"
+            class="button"
+            >Schedule a 15-Minute Call</a
+          >
+        </div>
+
+        <div class="reply-option">
+          Or simply reply to this email - I'd be happy to discuss your specific
+          needs
+        </div>
+
+        <div class="signature">
+          Best regards,<br />
+          The Blue Diamond Solutions Team
+        </div>
+      </div>
+
+      <div class="footer">
+        <p>
+          <a href="mailto:info@bluediamondsolutions.org"
+            >info@bluediamondsolutions.org</a
+          ><br />
+          <a href="https://www.bluediamondsolutions.org"
+            >www.bluediamondsolutions.org</a
+          >
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

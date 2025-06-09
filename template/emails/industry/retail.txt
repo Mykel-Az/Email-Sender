@@ -1,0 +1,19 @@
+Hi {{ recipient_name }},
+
+we noticed {% if last_name|length > 4 %} {{ last_name }}'s {% else %} {{ recipient_name }}'s {% endif %} unique products and believe your brand deserves digital tools that match their quality. We specialize in:
+
+E-commerce websites with seamless shopping
+Social media campaigns that drive traffic
+Complete branding packages
+
+Increase revenue and improve customer satisfaction with {{ company_name }}
+
+Schedule Demo
+
+Or simply reply - I'd love to hear about your current online strategy
+
+Best regards,
+The Blue Diamond Solutions Team
+
+info@bluediamondsolutions.org
+www.bluediamondsolutions.org

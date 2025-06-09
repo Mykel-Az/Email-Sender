@@ -1,0 +1,19 @@
+Hi {{ recipient_name }},
+
+We can see the done work at {% if last_name|length > 4 %} {{ last_name }} {% else %} {{ recipient_name }} {% endif %} is pushing healthcare forward - does your digital presence reflect that innovation? We help MedTech firms:
+
+Develop sleek, functional websites for devices/SaaS
+Design investor-ready pitch decks
+Run targeted LinkedIn campaigns
+
+Get new partnerships within few months of launching your redesigned digital assets.
+
+Book Strategy Session
+
+Or reply to this email - Let's discuss how we can support your mission
+
+Best regards,
+The Blue Diamond Solutions Team
+
+info@bluediamondsolutions.org
+www.bluediamondsolutions.org<

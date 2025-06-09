@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1>{{ campaign.name }}</h1>
+            <p class="text-muted">
+                Template: <span class="badge bg-info">{{ campaign.template_used|title }}</span>
+                | Created: {{ campaign.created_at|date:"M d, Y H:i" }}
+                | Status: <span class="badge bg-{% if campaign.is_completed %}success{% else %}warning{% endif %}">
+                    {% if campaign.is_completed %}Completed{% else %}Pending{% endif %}
+                </span>
+            </p>
+        </div>
+        <div>
+            {% if not campaign.is_completed %}
+                <button id="sendEmailsBtn" class="btn btn-primary me-2">
+                    <i class="bi bi-send"></i> Send Emails
+                </button>
+            {% endif %}
+            <a href="{% url 'campaign_list' %}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+        </div>
+    </div>
+    
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Recipients</h5>
+                    <p class="card-text display-6">{{ stats.total }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Sent</h5>
+                    <p class="card-text display-6">{{ stats.sent }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Pending</h5>
+                    <p class="card-text display-6">{{ stats.pending }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Failed</h5>
+                    <p class="card-text display-6">{{ stats.failed }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card shadow">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Recipients</h5>
+            <div>
+                <span class="badge bg-light text-dark">Completion: {{ stats.completion_rate|floatformat:1 }}%</span>
+            </div>
+        </div>
+        <div class="card-body">
+            {% if page_obj %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Sent At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for recipient in page_obj %}
+                            <tr>
+                                <td>{{ recipient.recipient_name }} {{ recipient.last_name }}</td>
+                                <td>{{ recipient.email }}</td>
+                                <td>
+                                    <span class="badge bg-{% if recipient.status == 'sent' %}success{% elif recipient.status == 'failed' %}danger{% else %}warning{% endif %}">
+                                        {{ recipient.status|title }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if recipient.sent_at %}
+                                        {{ recipient.sent_at|date:"M d, Y H:i" }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if recipient.status != 'sent' %}
+                                        <button class="btn btn-sm btn-outline-primary test-email-btn" 
+                                                data-recipient-id="{{ recipient.id }}">
+                                            Test Email
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="First">
+                                    <span aria-hidden="true">&laquo;&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        
+                        {% for num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == num %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Last">
+                                    <span aria-hidden="true">&raquo;&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% else %}
+                <div class="alert alert-info">No recipients found for this campaign.</div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript for AJAX operations -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Send emails button
+    const sendEmailsBtn = document.getElementById('sendEmailsBtn');
+    if (sendEmailsBtn) {
+        sendEmailsBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to send emails to all pending recipients?')) {
+                sendEmailsBtn.disabled = true;
+                sendEmailsBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+                
+                fetch("{% url 'send_campaign_emails' campaign_id=campaign.id %}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+                    if (data.success) {
+                        window.location.reload();
+                    } else {
+                        sendEmailsBtn.disabled = false;
+                        sendEmailsBtn.innerHTML = '<i class="bi bi-send"></i> Send Emails';
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred while sending emails.');
+                    console.error(error);
+                    sendEmailsBtn.disabled = false;
+                    sendEmailsBtn.innerHTML = '<i class="bi bi-send"></i> Send Emails';
+                });
+            }
+        });
+    }
+    
+    // Test email buttons
+    document.querySelectorAll('.test-email-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const recipientId = this.getAttribute('data-recipient-id');
+            const originalText = this.innerHTML;
+            this.disabled = true;
+            this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Sending...';
+            
+            fetch("{% url 'test_single_email' recipient_id=0 %}".replace('0', recipientId), {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    this.disabled = false;
+                    this.innerHTML = originalText;
+                }
+            })
+            .catch(error => {
+                alert('An error occurred while sending test email.');
+                console.error(error);
+                this.disabled = false;
+                this.innerHTML = originalText;
+            });
+        });
+    });
+});
+</script>
+{% endblock %}

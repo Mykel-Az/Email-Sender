@@ -1,0 +1,19 @@
+Hi {{ recipient_name }},
+
+Today's patients expect seamless digital experiences from their healthcare providers. We help practices like yours:
+
+Build compliant Patient portal solutions
+Create trust-building branding (logos, brochures)
+Manage social media to attract new patients
+
+Improve patient outcomes while reducing operational costs.</p>
+
+Schedule Consultation
+
+Or reply directly - I'm happy to answer any questions about HIPAA compliance
+
+Best regards,<br>
+The Blue Diamond Solutions Team
+ 
+info@bluediamondsolutions.org
+www.bluediamondsolutions.org
