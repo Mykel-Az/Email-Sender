@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'emailer'
+    'mobile_push'
 ]
 
 MIDDLEWARE = [
